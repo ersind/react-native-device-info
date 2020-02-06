@@ -52,6 +52,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.lang.Runtime;
 import java.net.NetworkInterface;
+import java.net.Inet4Address;
 import java.math.BigInteger;
 import java.util.Map;
 
@@ -255,7 +256,7 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
             }
             List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
                 for (InetAddress addr : addrs) {
-                    if (!addr.isLoopbackAddress()) {
+                    if (!addr.isLoopbackAddress() && addr instanceof Inet4Address) {
                         return addr.getHostAddress().toUpperCase();
                     }
             }
