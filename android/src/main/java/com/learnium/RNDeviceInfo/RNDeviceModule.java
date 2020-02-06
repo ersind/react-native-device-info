@@ -244,6 +244,30 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void getIpAddress(Promise p) { p.resolve(getIpAddressSync()); }
 
+  @ReactMethod(isBlockingSynchronousMethod = true)
+  @SuppressWarnings("ConstantConditions")
+  public String getIpAddressFromInterfaceSync(String interfaceName) {
+    try {
+        List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+        for (NetworkInterface intf : interfaces) {
+            if (interfaceName != null) {
+                if (!intf.getName().equalsIgnoreCase(interfaceName)) continue;
+            }
+            List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if (!addr.isLoopbackAddress()) {
+                        return addr.getHostAddress().toUpperCase();
+                    }
+            }
+        }
+    } catch (Exception ex) { }
+    return "unknown";
+  }
+
+  @ReactMethod
+  public void getIpAddressFromInterface(String interfaceName, Promise p) { p.resolve(getIpAddressFromInterfaceSync(interfaceName)); }
+
+
   @SuppressWarnings("deprecation")
   @ReactMethod(isBlockingSynchronousMethod = true)
   public boolean isCameraPresentSync() {

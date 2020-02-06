@@ -82,6 +82,7 @@ interface ExposedNativeMethods {
   getInstanceId: () => Promise<string>;
   getInstanceIdSync: () => string;
   getIpAddress: () => Promise<string>;
+  getIpAddressFromInterface : (interfaceName:string) => Promise<string>;
   getIpAddressSync: () => string;
   getLastUpdateTime: () => Promise<number>;
   getLastUpdateTimeSync: () => number;

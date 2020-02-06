@@ -94,6 +94,13 @@ export async function getIpAddress() {
   return 'unknown';
 }
 
+export async function getIpAddressFromInterface(interfaceName : string) {
+  if (Platform.OS === 'android') {
+    return RNDeviceInfo.getIpAddressFromInterface(interfaceName);
+  }
+  return 'unknown';
+}
+
 export function getIpAddressSync() {
   if (Platform.OS === 'android' || Platform.OS === 'ios' || Platform.OS === 'windows') {
     return RNDeviceInfo.getIpAddressSync();
@@ -1379,6 +1386,7 @@ const deviceInfoModule: DeviceInfoModule = {
   getInstanceId,
   getInstanceIdSync,
   getIpAddress,
+  getIpAddressFromInterface,
   getIpAddressSync,
   getLastUpdateTime,
   getLastUpdateTimeSync,
